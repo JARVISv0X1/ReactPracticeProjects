@@ -1,0 +1,7 @@
+#spring:
+#  profiles: uat
+#
+#DBDriver: com.mysql.jdbc.Driver
+#DBURL: "jdbc:mysql://127.0.0.1:3306/reactcommanbackendproject?autoReconnect=true&amp;useSSL=false"
+#DBUser: root
+#DBPassword: root
