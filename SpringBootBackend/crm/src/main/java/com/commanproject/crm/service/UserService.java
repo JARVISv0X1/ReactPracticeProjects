@@ -1,5 +1,6 @@
 package com.commanproject.crm.service;
 
+import java.util.Date;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,36 +17,69 @@ public class UserService {
 	
 	public String createUser(User user) {
 
-		boolean emailIdExist=getUserByEmailId(user.getEmailId());
-		
-		if(emailIdExist==false) {
+		User dbUserExist=getUserByEmailId(user.getEmailId());
+		Date date = new Date();
+		if(dbUserExist==null) {
 			try {
 				user.setUniqueId(randomUniqueIdGenerator());
 				user.setSalt(usingRandomUUID());
-				user.setPassword(HashGenerator.passwordHashGenerator(user.getPassword(),user.getUniqueId(),user.getSalt()));;
-				userRepository.save(user);
+				user.setPassword(HashGenerator.passwordHashGenerator(user.getPassword(),user.getUniqueId(),user.getSalt()));
+				user.setUserStatus("Pending");
+				user.setCreateDate(date);
+				if(!(user.getUserType().equals("Merchant") || user.getUserType().equals("Reseller") )) {
+					return "Invalid User Type";
+				}
+				else {
+					userRepository.save(user);
+				}
+
 			}catch(Exception e) {
 				System.out.println("Exception: "+e);
 			}
 			return "User Added SuccessFull";
 		}else {
-			return "User with email "+emailIdExist+ " Already Exist.";
+			return "User with email "+dbUserExist.getEmailId()+ " Already Exist.";
 		}
 		 
 	}
 	
-	public boolean getUserByEmailId(String emailId) {
+	public User getUserByEmailId(String emailId) {
 		 User user = userRepository.findByEmailId(emailId);
 
 		    // Check if the user is not null before attempting to use it
 		    if (user != null) {
-		        return true;
+		        return user;
 		    } else {
-		        return false; // or an empty string based on your requirements
+		        return null; // or an empty string based on your requirements
 		    }
 	}
 	
-	
+	public String userLogin(User user) {
+		User dbUserExist=getUserByEmailId(user.getEmailId());
+		String password= user.getPassword();
+		User loginUser=new User();
+		if(!(dbUserExist==null)) {
+			try {
+				loginUser.setEmailId(dbUserExist.getEmailId());
+				if(dbUserExist.getUserStatus().equals("Active")) {
+					loginUser.setPassword(HashGenerator.passwordHashGenerator(password,dbUserExist.getUniqueId(),dbUserExist.getSalt()));;
+				}else {
+					
+					return "User Status is: "+ dbUserExist.getUserStatus();
+				}
+			}catch(Exception e) {
+				System.out.println("Exception: "+e);
+			}
+			if(loginUser.getPassword().equals(dbUserExist.getPassword()) ) {
+				return "Login Successfull";
+			}else {
+				return "Email id/Passsword is wrong.";
+			}
+		}else {
+			return "Email id/Passsword is wrong.";
+		}
+		
+	}
 	
 	public String randomUniqueIdGenerator() {
 		String uId="";

@@ -35,6 +35,7 @@ public class User {
 	private String state;
 	private String country;
 	private String postalCode;
+	private Date createDate;
 	
 	
 		
@@ -140,6 +141,12 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public Date getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 	
 }
