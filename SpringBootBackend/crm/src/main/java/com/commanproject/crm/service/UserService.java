@@ -16,9 +16,9 @@ public class UserService {
 	
 	public String createUser(User user) {
 
-		String emailId=getUserByEmailId(user.getEmailId());
+		boolean emailIdExist=getUserByEmailId(user.getEmailId());
 		
-		if(emailId==null || emailId=="") {
+		if(emailIdExist==false) {
 			try {
 				user.setUniqueId(randomUniqueIdGenerator());
 				user.setSalt(usingRandomUUID());
@@ -29,14 +29,20 @@ public class UserService {
 			}
 			return "User Added SuccessFull";
 		}else {
-			return "User with email "+emailId+ " Already Exist.";
+			return "User with email "+emailIdExist+ " Already Exist.";
 		}
 		 
 	}
 	
-	public String getUserByEmailId(String emailId) {
-		String email=userRepository.findByEmailId(emailId);
-		return email;
+	public boolean getUserByEmailId(String emailId) {
+		 User user = userRepository.findByEmailId(emailId);
+
+		    // Check if the user is not null before attempting to use it
+		    if (user != null) {
+		        return true;
+		    } else {
+		        return false; // or an empty string based on your requirements
+		    }
 	}
 	
 	

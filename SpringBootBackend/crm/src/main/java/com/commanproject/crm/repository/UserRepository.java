@@ -6,6 +6,6 @@ import com.commanproject.crm.entity.User;
 
 public interface UserRepository extends  JpaRepository<User, String>{
 
-	String findByEmailId(String emailId);
+	User findByEmailId(String emailId);
 
 }
