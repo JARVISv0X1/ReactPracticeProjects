@@ -1,4 +1,4 @@
-import LoggedInHeader from "./LoggedInHeader";
+import LoggedInHeader from "../LoggedInHeader";
 import AdminSideBar from "./AdminSideBar";
 export default function AdminHome() {
   return (

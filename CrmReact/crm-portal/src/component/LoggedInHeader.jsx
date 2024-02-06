@@ -11,15 +11,15 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import { useNavigate } from "react-router-dom";
 
 const pages = [];
 //["Products", "Pricing", "Blog"]
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
 function LoggedInHeader() {
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -32,7 +32,12 @@ function LoggedInHeader() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
+  function routTo(event) {
+    let id = event.currentTarget.name;
+    if (id === "Logout") {
+      navigate("/logout");
+    }
+  }
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -42,7 +47,6 @@ function LoggedInHeader() {
             variant="h6"
             noWrap
             component="a"
-            href="#"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -87,7 +91,6 @@ function LoggedInHeader() {
             variant="h5"
             noWrap
             component="a"
-            href="#"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -137,7 +140,11 @@ function LoggedInHeader() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <a onClick={routTo} name={setting}>
+                    <Typography textAlign="center" name={setting}>
+                      {setting}
+                    </Typography>
+                  </a>
                 </MenuItem>
               ))}
             </Menu>
