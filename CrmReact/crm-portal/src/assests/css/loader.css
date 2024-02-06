@@ -1,0 +1,9 @@
+.loader {
+  margin: auto;
+  width: 10%; /* Adjust the width and height as needed */
+  background: transparent;
+  position: absolute;
+  top: 40%;
+  left: 45%;
+  z-index: 999;
+}

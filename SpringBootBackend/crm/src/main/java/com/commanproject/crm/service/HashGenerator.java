@@ -2,12 +2,15 @@ package com.commanproject.crm.service;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HashGenerator {
-	
+	private static Logger logger = LoggerFactory.getLogger(UserService.class.getName());
+
 //	SHA-256 HashStringGenerator
 	public static String passwordHashGenerator(String password,String uId,String salt) {
+		logger.info("Inside passwordHashGenerator(); ");
 		String hashPasswordString = password+uId+salt;
 		try {
 			hashPasswordString=generateSHA256Hash(hashPasswordString);
