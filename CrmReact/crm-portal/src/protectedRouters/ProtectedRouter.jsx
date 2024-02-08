@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
-export default function ProtectedRouter({ Component }) {
+export default function ProtectedRouter({ Component, usTpe }) {
   let [isAuthenticated, setIsAuthenticated] = useState(Cookies.get("userAuth"));
   const navigate = useNavigate();
   useEffect(() => {
@@ -12,13 +12,14 @@ export default function ProtectedRouter({ Component }) {
     if (isAuthenticated === false || isAuthenticated === undefined) {
       navigate("/login");
     }
+
     console.log("isAuthenticated: " + localStorage.getItem("userAuth"));
   }, [isAuthenticated]);
 
   return (
     <>
       {" "}
-      <Component></Component>
+      <Component usTpe={usTpe}></Component>
     </>
   );
 }

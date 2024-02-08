@@ -11,32 +11,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.commanproject.crm.entity.User;
+import com.commanproject.crm.entity.Product;
+import com.commanproject.crm.service.ProductService;
 import com.commanproject.crm.service.UserService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/product")
+public class ProductController {
 	private static Logger logger = LoggerFactory.getLogger(UserService.class.getName());
-
+	
 	@Autowired
-	private UserService userService;
+	private ProductService productService;
 
-	
-	@PostMapping("/registerUser")
-	public Map<String, Object> addUser(@RequestBody User user) {
-		logger.info("Executing addUser();");
-		return userService.createUser(user);
-		
+	@PostMapping("/addProduct")
+	public Map<String, Object> addProduct(@RequestBody Product product) {
+		logger.info("Executing addProduct();");
+		return productService.saveProduct(product);
 	}
-	
-	@PostMapping("/login")
-	public Map<String, Object> userLogin(@RequestBody User loginUser) {
-		logger.info("Executing userLogin();");
-
-		return userService.userLogin(loginUser);
-		
-	}
-	
 }

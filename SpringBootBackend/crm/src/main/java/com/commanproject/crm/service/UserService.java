@@ -20,31 +20,58 @@ public class UserService {
 	private UserRepository userRepository;
 
 	private static Logger logger = LoggerFactory.getLogger(UserService.class.getName());
-	   Map<String, Object> response = new HashMap<>();	
 	public Map<String, Object> createUser(User user) {
+		   Map<String, Object> response = new HashMap<>();	
+		   User dbUserExist;
+			Date date = new Date();
 		logger.info("Executing createUser();");
 
-		User dbUserExist=getUserByEmailId(user.getEmailId());
-		Date date = new Date();
+		if(user.getEmailId().equals("")) {
+			response.put("responseMessage","Email ID is empty.");
+			return response;
+		}
+		else if(user.getMobile().equals("")){
+			response.put("responseMessage","Mobile Number is empty.");
+			return response;
+		}else if(user.getFirstName().equals("")){
+			response.put("responseMessage","First Name is empty.");
+			return response;
+		}else if(user.getLastName().equals("")){
+			response.put("responseMessage","Last Name is empty.");
+			return response;
+		}else if(user.getPassword().equals("")){
+			response.put("responseMessage","Password is empty.");
+			return response;
+		}
+		else {
+			dbUserExist=getUserByEmailId(user.getEmailId());
+		}
 		
 		if(dbUserExist==null) {
 
 				user.setUniqueId(randomUniqueIdGenerator());
 				user.setSalt(usingRandomUUID());
 				user.setPassword(HashGenerator.passwordHashGenerator(user.getPassword(),user.getUniqueId(),user.getSalt()));
-				user.setUserStatus("Pending");
 				user.setCreateDate(date);
-				if(!(user.getUserType().equals("Merchant") || user.getUserType().equals("Reseller") )) {
-					logger.error("Invalid UserType: "+user.getUserType());
-					response.put("responseMessage","Invalid User Type");
+				if(user.getUserType()==null) {
+					user.setUserType("customer");
+					user.setUserStatus("active");
+				}else {
+					if(user.getUserType().equals("admin")) {
+						user.setUserStatus("pending");
+					}else {
+						logger.error("Invalid UserType: "+user.getUserType());
+						response.put("responseMessage","Invalid User Type");
+						return response;
+					}
 				}
-				else {
+				
 					userRepository.save(user);
 					response.put("emailId",user.getEmailId());
 					response.put("userType",user.getUserType());
 					response.put("responseMessage","Registration Successfull");
 					logger.info("Execution complete for save(user);");
-				}
+				
 			}
 		else {
 			logger.error("User with email "+user.getEmailId()+ " Already Exist.");
@@ -69,18 +96,34 @@ public class UserService {
 	}
 	
 	public Map<String, Object> userLogin(User user) {
-		logger.info("Login atempt for Email Id:"+ user.getEmailId());
-		User dbUserExist=getUserByEmailId(user.getEmailId());
+		   Map<String, Object> response = new HashMap<>();	
+		   
+		   User dbUserExist;
+		   if(user.getEmailId().equals("")) {
+				response.put("responseMessage","Email ID is empty.");
+				return response;
+			}else if(user.getPassword().equals("")){
+				response.put("responseMessage","Password is empty.");
+				return response;
+			}
+			else {
+				logger.info("Login atempt for Email Id:"+ user.getEmailId());
+				dbUserExist=getUserByEmailId(user.getEmailId());
+			}
+		   
+		
+		
 		String password= user.getPassword();
 		User loginUser=new User();
 //		Responses responses =new Responses();
+		
 		if(!(dbUserExist==null)) {
 			try {
 				logger.info("Find email id in db: "+ dbUserExist.getEmailId());
 				loginUser.setEmailId(dbUserExist.getEmailId());
 				loginUser.setUserStatus(dbUserExist.getUserStatus());
 				loginUser.setUserType(dbUserExist.getUserType());
-				if(dbUserExist.getUserStatus().equals("Active")) {
+				if(dbUserExist.getUserStatus().equals("active")) {
 					
 					loginUser.setPassword(HashGenerator.passwordHashGenerator(password,dbUserExist.getUniqueId(),dbUserExist.getSalt()));;
 				}else {

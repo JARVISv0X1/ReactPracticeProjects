@@ -6,6 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
 import loaderGif from "../assests/lodingIcons/giphy.gif";
 import "../assests/css/loader.css";
+import "../index.css";
+
 export default function Login() {
   const navigate = useNavigate();
   let [loaderImg, setLoaderImg] = useState(false);
@@ -27,7 +29,7 @@ export default function Login() {
     setLoaderImg(() => true);
     axios({
       // Endpoint to login
-      url: "http://localhost:8081/crm/login",
+      url: "http://localhost:8081/user/login",
       method: "POST",
       // Attaching the form data
       data: loginData,
@@ -40,7 +42,7 @@ export default function Login() {
           Cookies.set("userName", loginData.emailId);
           Cookies.set("userAuth", true);
           Cookies.set("userType", resUtype);
-          navigate("/adminhome");
+          navigate("/home");
         } else {
           setLoaderImg(() => false);
           toast(responseMessage);
@@ -92,9 +94,22 @@ export default function Login() {
           />
           <label className="form-check-label">Check me out</label>
         </div> */}
-          <button type="submit" className="btn btn-primary">
-            Login
-          </button>
+          <div className="container">
+            <div className="row">
+              <div className="col-6">
+                <button type="submit" className="btn btn-primary">
+                  Login Up
+                </button>
+              </div>
+              <div className="col-6">
+                <button type="submit" className="btn btn-success">
+                  <a href="/signUp" className="text-white text-decoration-0">
+                    Sign Up
+                  </a>
+                </button>
+              </div>
+            </div>
+          </div>
         </form>
       )}
 
