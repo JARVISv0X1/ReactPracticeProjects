@@ -18,7 +18,7 @@ function App() {
   const [gameTurn, setGameTurn] = useState([]);
   let activePlayer = deriveActivePlayer(gameTurn);
 
-  let gameBoard = [...iniitialGameBoard.map(array=> [...array])];
+  let gameBoard = [...iniitialGameBoard.map((array) => [...array])];
   let winner;
   let hasDraw = gameTurn.length === 9 && !winner;
 
@@ -83,6 +83,11 @@ function App() {
             board={gameBoard}
             hasWinner={winner}
           ></GameBoard>
+          <div id="resetBtn">
+            <p>
+              <button onClick={resetGame}>Rematch</button>
+            </p>
+          </div>
         </div>
         <Log turns={gameTurn}></Log>
       </main>
