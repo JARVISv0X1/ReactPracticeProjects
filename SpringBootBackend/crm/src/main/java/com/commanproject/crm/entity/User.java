@@ -13,7 +13,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Proxy;
 @Entity
 @Proxy(lazy= true)
-@Table(indexes = { @Index(name = "IDX_MYIDX1", columnList = "emailId,uniqueId") } , name="User")
+@Table(indexes = { @Index(name = "IDX_MYIDX1", columnList = "emailId,uniqueId") } , name="user")
 @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)	
 public class User {
 	@Id
