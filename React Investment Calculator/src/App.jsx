@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Header from "./component/Header";
 import ResultTable from "./component/ResultTable";
+import UserInput from "./component/UserInput";
 
 function App() {
   let [investmentData, setInvestmentData] = useState({
@@ -9,23 +10,25 @@ function App() {
     expectedReturn: "",
     duration: "",
   });
-  useEffect(() => {}, [investmentData]);
 
   function handleInput(e) {
     const { name, value } = e.target;
     if (value < 1) {
       alert("Invalid Entry");
     } else {
-      setInvestmentData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
+      setInvestmentData((prev) => {
+        return {
+          ...prev,
+          [name]: value,
+        };
+      });
     }
   }
 
   return (
     <>
-      <Header onReplace={handleInput} />
+      <Header />
+      <UserInput onReplace={handleInput} />
       <ResultTable resultData={{ ...investmentData }} />
     </>
   );
