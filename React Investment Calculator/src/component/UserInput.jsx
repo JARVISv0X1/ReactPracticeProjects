@@ -1,4 +1,4 @@
-export default function UserInput({ onReplace }) {
+export default function UserInput({ onReplace, values }) {
   return (
     <>
       <section id="user-input">
@@ -9,7 +9,9 @@ export default function UserInput({ onReplace }) {
               type="number"
               name="initialInvestment"
               id="initialInvestment"
+              value={values.initialInvestment}
               onChange={onReplace}
+              required
             />
           </p>
 
@@ -19,7 +21,9 @@ export default function UserInput({ onReplace }) {
               type="number"
               name="annualInvestment"
               id="annualInvestment"
+              value={values.annualInvestment}
               onChange={onReplace}
+              required
             />
           </p>
         </div>
@@ -30,7 +34,9 @@ export default function UserInput({ onReplace }) {
               type="number"
               name="expectedReturn"
               id="expectedReturn"
+              value={values.expectedReturn}
               onChange={onReplace}
+              required
             />
           </p>
           <p>
@@ -39,7 +45,9 @@ export default function UserInput({ onReplace }) {
               type="number"
               name="duration"
               id="duration"
+              value={values.duration}
               onChange={onReplace}
+              required
             />
           </p>
         </div>
