@@ -12,31 +12,26 @@ function App() {
     duration: 10,
   });
 
+  const inputIsValid = investmentData.duration >= 1;
   function handleInput(e) {
     const { name, value } = e.target;
-    if (value < 0) {
-      alert(`${name} Invalid Entry`);
-      setInvestmentData((prev) => {
-        return {
-          ...prev,
-          [name]: 0,
-        };
-      });
-    } else {
-      setInvestmentData((prev) => {
-        return {
-          ...prev,
-          [name]: +value,
-        };
-      });
-    }
+    setInvestmentData((prev) => {
+      return {
+        ...prev,
+        [name]: +value,
+      };
+    });
   }
 
   return (
     <>
       <Header />
       <UserInput onReplace={handleInput} values={investmentData} />
-      <ResultTable resultData={investmentData} formatter={formatter} />
+      {inputIsValid ? (
+        <ResultTable resultData={investmentData} formatter={formatter} />
+      ) : (
+        <p className="center">Please enter a duration greater than 0</p>
+      )}
     </>
   );
 }
