@@ -1,9 +1,14 @@
-import Player from './components/Player.jsx';
+import { useState } from "react";
+import Player from "./components/Player.jsx";
 
 function App() {
+  let [playerName, setPlayerName] = useState("unknown entity");
+  function updatePlayerName(updatedName) {
+    setPlayerName(updatedName);
+  }
   return (
     <>
-      <Player />
+      <Player playerName={playerName} onSelect={updatePlayerName} />
       <div id="challenges"></div>
     </>
   );
