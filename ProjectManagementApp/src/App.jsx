@@ -1,39 +1,24 @@
 import { useState } from "react";
-import Content from "./component/Content";
-import SideBar from "./component/SideBar";
+import ProjectSideBar from "./component/ProjectSideBar";
+import NewProject from "./component/NewProject";
+import NoProjectSelected from "./component/NoProjectSelected";
 
 function App() {
-  let [menuItems, setMenuItems] = useState(["karan", "kumar"]);
-  const [projectSelected, setProjectSelected] = useState(false);
-  const [addProject, setAddProject] = useState(true);
-  function createProject() {
-    setAddProject((prev) => (prev = true));
-    setProjectSelected((prev) => (prev = false));
-  }
-  function selectProject() {
-    setProjectSelected((prev) => (prev = true));
-    setAddProject((prev) => (prev = false));
+  const [addProject, setAddProject] = useState(0);
+
+  function handleAddProjectButn() {
+    setAddProject((prev) => prev + 1);
   }
   return (
     <>
-      <div className="flex flex-row space-x-2 p-0 m-0">
-        <div className="basis-1/4 border-2  border-black">
-          <SideBar
-            createProject={createProject}
-            projectSelected={projectSelected}
-            menuItems={menuItems}
-            onSelect={selectProject}
-            addProject={addProject}
-          />
-        </div>
-        <div className="basis-3/4 border-2 border-red-800">
-          <Content
-            projectSelected={projectSelected}
-            createProject={createProject}
-            addProject={addProject}
-          />
-        </div>
-      </div>
+      <main className=" flex gap-8 h-screen my-8">
+        <ProjectSideBar onSelect={handleAddProjectButn} />
+        {addProject > 0 ? (
+          <NewProject />
+        ) : (
+          <NoProjectSelected onSelect={handleAddProjectButn} />
+        )}
+      </main>
     </>
   );
 }
