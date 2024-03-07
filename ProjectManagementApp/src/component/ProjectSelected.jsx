@@ -1,9 +1,23 @@
-export default function ProjectSelected({ projects, deleteSelectedProject }) {
+import { useRef } from "react";
+import Input from "./Input";
+import Task from "./Task";
+
+export default function ProjectSelected({
+  projects,
+  deleteSelectedProject,
+  addTask,
+}) {
+  const taskToAdd = useRef();
   const formattedDate = new Date(projects.dueDate).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
     day: "numeric",
   });
+
+  function addTaskToList(id) {
+    let task = taskToAdd.current.value;
+    addTask(id, task);
+  }
   return (
     <>
       <div className="w-[35rem] mt-16">
@@ -24,6 +38,9 @@ export default function ProjectSelected({ projects, deleteSelectedProject }) {
             {projects.description}
           </p>
         </header>
+
+        <Task></Task>
+        
       </div>
     </>
   );
