@@ -8,8 +8,16 @@ export default function NewTask({ addTask, projectsId }) {
   }
 
   function handleClick() {
-    addTask(enteredTask);
-    setEnteredTask("");
+    if (
+      enteredTask === "" ||
+      enteredTask === undefined ||
+      enteredTask === null
+    ) {
+      alert("Value can't be empty.");
+    } else {
+      addTask(enteredTask);
+      setEnteredTask("");
+    }
   }
 
   return (
@@ -21,7 +29,7 @@ export default function NewTask({ addTask, projectsId }) {
         onChange={handleChange}
       ></input>
       <button
-        className="text-stone-700 hover:text-stone-950"
+        className="px-2 border-2 rounded-sm border-green-500 text-green-500 hover:text-green-600 hover:border-green-600"
         onClick={handleClick}
       >
         + Add Task

@@ -83,15 +83,20 @@ function App() {
     console.log(projectState.taskList);
   }
 
-  function handleDeleteTask() {}
-  // function ProjectDetail() {
-  //   setProjectState((prev) => {
-  //     return {
-  //       ...prev,
-  //       selectedProjectId: undefined,
-  //     };
-  //   });
-  // }
+  function handleDeleteTask(taskId) {
+    setProjectState((prevState) => {
+      const newTaskList = prevState.taskList.filter(
+        (task) => task.id !== taskId
+      );
+      console.log(newTaskList);
+      return {
+        ...prevState,
+        taskList: newTaskList,
+      };
+    });
+    console.log(projectState.taskList);
+  }
+
   console.log(projectState);
   const selectedProject = projectState.projects.find(
     (project) => project.id === projectState.selectedProjectId

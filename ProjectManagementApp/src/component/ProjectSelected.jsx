@@ -7,6 +7,7 @@ export default function ProjectSelected({
   deleteSelectedProject,
   addTask,
   taskList,
+  deleteTask,
 }) {
   const formattedDate = new Date(projects.dueDate).toLocaleDateString("en-US", {
     year: "numeric",
@@ -24,9 +25,9 @@ export default function ProjectSelected({
             </h1>
             <button
               onClick={() => deleteSelectedProject(projects.id)}
-              className="text-stone-600 hover:text-stone-950"
+              className="px-2 border-2 rounded-sm border-red-500 text-red-500 hover:text-red-600 hover:border-red-600"
             >
-              Delete
+              Delete Project
             </button>
           </div>
           <p className="mb-4 text-stone-400">{formattedDate}</p>
@@ -39,6 +40,7 @@ export default function ProjectSelected({
           taskList={taskList}
           addTask={addTask}
           projectsId={projects.id}
+          deleteTask={deleteTask}
         ></Task>
       </div>
     </>
