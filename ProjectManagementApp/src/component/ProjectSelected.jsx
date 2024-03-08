@@ -6,18 +6,14 @@ export default function ProjectSelected({
   projects,
   deleteSelectedProject,
   addTask,
+  taskList,
 }) {
-  const taskToAdd = useRef();
   const formattedDate = new Date(projects.dueDate).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
     day: "numeric",
   });
 
-  function addTaskToList(id) {
-    let task = taskToAdd.current.value;
-    addTask(id, task);
-  }
   return (
     <>
       <div className="w-[35rem] mt-16">
@@ -39,8 +35,11 @@ export default function ProjectSelected({
           </p>
         </header>
 
-        <Task></Task>
-        
+        <Task
+          taskList={taskList}
+          addTask={addTask}
+          projectsId={projects.id}
+        ></Task>
       </div>
     </>
   );
