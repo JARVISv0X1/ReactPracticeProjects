@@ -47,9 +47,13 @@ function App() {
       const remaningProject = prev.projects.filter(
         (project) => project.id !== id
       );
+      const remaningTask = prev.taskList.filter(
+        (task) => task.projectId !== id
+      );
       return {
         projects: remaningProject,
         selectedProjectId: undefined,
+        taskList: remaningTask,
       };
     });
   }
@@ -78,12 +82,10 @@ function App() {
   }
 
   function handleDeleteTask(taskId) {
-    let newTaskList = [];
     setProjectState((prevState) => {
-      newTaskList = prevState.taskList.filter((task) => task.id !== taskId);
       return {
         ...prevState,
-        taskList: newTaskList,
+        taskList: prevState.taskList.filter((task) => task.id !== taskId),
       };
     });
   }
