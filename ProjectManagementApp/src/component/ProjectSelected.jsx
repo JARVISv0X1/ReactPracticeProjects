@@ -1,5 +1,3 @@
-import { useRef } from "react";
-import Input from "./Input";
 import Task from "./Task";
 
 export default function ProjectSelected({
@@ -14,7 +12,7 @@ export default function ProjectSelected({
     month: "short",
     day: "numeric",
   });
-
+  const pId = projects.id;
   return (
     <>
       <div className="w-[35rem] mt-16">
@@ -39,7 +37,7 @@ export default function ProjectSelected({
         <Task
           taskList={taskList}
           addTask={addTask}
-          projectsId={projects.id}
+          projectsId={pId}
           deleteTask={deleteTask}
         ></Task>
       </div>

@@ -5,11 +5,6 @@ import NoProjectSelected from "./component/NoProjectSelected";
 import ProjectSelected from "./component/ProjectSelected";
 
 function App() {
-  // const [projectData, setProjectData] = useState({
-  //   title: "",
-  //   description: "",
-  //   dueDate: "",
-  // });
   const [projectState, setProjectState] = useState({
     selectedProjectId: undefined,
     projects: [],
@@ -80,24 +75,19 @@ function App() {
         taskList: [newTask, ...prevState.taskList],
       };
     });
-    console.log(projectState.taskList);
   }
 
   function handleDeleteTask(taskId) {
+    let newTaskList = [];
     setProjectState((prevState) => {
-      const newTaskList = prevState.taskList.filter(
-        (task) => task.id !== taskId
-      );
-      console.log(newTaskList);
+      newTaskList = prevState.taskList.filter((task) => task.id !== taskId);
       return {
         ...prevState,
         taskList: newTaskList,
       };
     });
-    console.log(projectState.taskList);
   }
 
-  console.log(projectState);
   const selectedProject = projectState.projects.find(
     (project) => project.id === projectState.selectedProjectId
   );
