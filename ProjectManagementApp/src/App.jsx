@@ -122,6 +122,7 @@ function App() {
           onStartAddProject={handleStartAddProject}
           menuContent={projectState.projects}
           onSelectProject={handleSelectProject}
+          selectProjectId={projectState.selectedProjectId}
         />
         {content}
       </main>
