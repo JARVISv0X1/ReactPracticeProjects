@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ProjectSideBar from "./component/ProjectSideBar";
 import NewProject from "./component/NewProject";
 import NoProjectSelected from "./component/NoProjectSelected";
 import ProjectSelected from "./component/ProjectSelected";
-
+import { projectContext } from "./store/project-management-context";
 function App() {
   const [projectState, setProjectState] = useState({
     selectedProjectId: undefined,
@@ -115,8 +115,13 @@ function App() {
     content = <NoProjectSelected onStartAddProject={handleStartAddProject} />;
   }
 
+  let appStore = {
+    onStartAddProject: handleStartAddProject,
+    onSelectProject: handleSelectProject,
+    cancleProjectSave: cancleProject,
+  };
   return (
-    <>
+    <projectContext.Provider value={appStore}>
       <main className=" flex gap-8 h-screen my-8">
         <ProjectSideBar
           onStartAddProject={handleStartAddProject}
@@ -126,7 +131,7 @@ function App() {
         />
         {content}
       </main>
-    </>
+    </projectContext.Provider>
   );
 }
 
