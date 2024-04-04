@@ -4,6 +4,8 @@ import Cookies from "js-cookie";
 export default function Logout() {
   useEffect(() => {
     Cookies.remove("userAuth");
+    Cookies.remove("userName");
+    Cookies.remove("userType");
   }, []);
   return (
     <>

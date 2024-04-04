@@ -11,7 +11,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const pages = [];
 //["Products", "Pricing", "Blog"]
@@ -140,11 +140,16 @@ function LoggedInHeader() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <a onClick={routTo} name={setting}>
+                  <Link
+                    to="/"
+                    onClick={routTo}
+                    name={setting}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
                     <Typography textAlign="center" name={setting}>
                       {setting}
                     </Typography>
-                  </a>
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>

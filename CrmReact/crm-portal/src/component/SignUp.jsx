@@ -174,7 +174,7 @@ export default function SignUp() {
                           href="/login"
                           className="text-white text-decoration-0"
                         >
-                          Login Up
+                          Login in
                         </a>
                       </button>
                     </div>

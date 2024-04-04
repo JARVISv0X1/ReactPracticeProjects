@@ -42,7 +42,8 @@ export default function Login() {
           Cookies.set("userName", loginData.emailId);
           Cookies.set("userAuth", true);
           Cookies.set("userType", resUtype);
-          navigate("/home");
+          navigate("home");
+          setLoaderImg(() => false);
         } else {
           setLoaderImg(() => false);
           toast(responseMessage);
@@ -98,7 +99,7 @@ export default function Login() {
             <div className="row">
               <div className="col-6">
                 <button type="submit" className="btn btn-primary">
-                  Login Up
+                  Login in
                 </button>
               </div>
               <div className="col-6">
