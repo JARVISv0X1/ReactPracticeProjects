@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.commanproject.crm.entity.User;
+import com.commanproject.crm.oauth.JwtUtil;
 import com.commanproject.crm.repository.UserRepository;
 
 @Service
@@ -139,6 +140,8 @@ public class UserService {
 				response.put("userType",loginUser.getUserType());
 				response.put("userStatus",loginUser.getUserStatus());
 				response.put("responseMessage","validUser");
+				String token = JwtUtil.generateToken(loginUser.getEmailId());
+				response.put("token",token);
 			}else {
 				logger.error("Passsword is wrong.");
 				response.put("responseMessage","Email id/Passsword is wrong.");
@@ -147,7 +150,8 @@ public class UserService {
 			logger.error("Email id is wrong.");
 			response.put("responseMessage","Email id/Passsword is wrong.");
 		}
-		
+		logger.info("Sending Responce to client for: "+ dbUserExist.getEmailId());
+
 		return response;
 	}
 	
