@@ -1,4 +1,4 @@
-export default function SelectedPlaces({ selectedPlace }) {
+export default function SelectedPlaces({ onSelect, selectedPlace }) {
   return (
     <>
       <div className="container">
@@ -6,7 +6,11 @@ export default function SelectedPlaces({ selectedPlace }) {
         <div className="row mt-5">
           {selectedPlace.map((places) => {
             return (
-              <div key={places.id} className="col-3">
+              <div
+                key={places.id}
+                onClick={() => onSelect(places.id)}
+                className="col-3"
+              >
                 <img
                   src={places.image.src}
                   className="img-fluid"

@@ -30,10 +30,21 @@ function App() {
     console.log(selectedPlaces);
   }
 
+  function removePlaceFromSelectedPlace(id) {
+    const placeToAdd = selectedPlaces.filter((place) => place.id !== id);
+    if (placeToAdd) {
+      setSelectedPlaces(() => placeToAdd);
+    } else {
+      console.error("Place not found");
+    }
+  }
   return (
     <>
       {selectedPlaces.length > 0 ? (
-        <SelectedPlaces selectedPlace={selectedPlaces}></SelectedPlaces>
+        <SelectedPlaces
+          onSelect={removePlaceFromSelectedPlace}
+          selectedPlace={selectedPlaces}
+        ></SelectedPlaces>
       ) : (
         "No Place Selected"
       )}
