@@ -2,7 +2,7 @@ export default function SelectedPlaces({ onSelect, selectedPlace }) {
   return (
     <>
       <div className="container">
-        <div className="row">Selected Places:</div>
+        <div className="row ">Selected Places:</div>
         <div className="row mt-5">
           {selectedPlace.map((places) => {
             return (
