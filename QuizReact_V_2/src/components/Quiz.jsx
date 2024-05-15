@@ -1,20 +1,29 @@
 import { useCallback, useState } from "react";
 import question from "../questions";
-import quizCompleteLogo from "../assets/quiz-complete.png";
 import QuestionTimer from "./QuestionTimer";
+import Summary from "./Summary";
 export default function Quiz() {
   let [userAnswers, setUserAnswers] = useState([]);
+  let [answerSelected, setAnswerSelected] = useState(false);
   const activeQuestionIndex = userAnswers.length;
   const quizIsCompleted = activeQuestionIndex === question.length;
 
   const handleSelectAnswer = useCallback(function handleSelectAnswer(
     selectedAnswer
   ) {
+    if (
+      selectedAnswer !== "" ||
+      selectedAnswer !== null ||
+      selectedAnswer !== undefined
+    ) {
+      setAnswerSelected(true);
+    } else {
+      setAnswerSelected(false);
+    }
     setUserAnswers((prevUserAnswers) => {
       return [
         ...prevUserAnswers,
         {
-          question: question[activeQuestionIndex].text,
           answer: selectedAnswer,
         },
       ];
@@ -28,12 +37,7 @@ export default function Quiz() {
   );
 
   if (quizIsCompleted) {
-    return (
-      <div id="summary">
-        <img src={quizCompleteLogo} alt="quizCompleteLogo" />
-        <h2>QuizCompleted</h2>
-      </div>
-    );
+    return <Summary useranswers={userAnswers}></Summary>;
   }
 
   const suffeledAnswers = [...question[activeQuestionIndex].answers];
@@ -51,7 +55,10 @@ export default function Quiz() {
           {suffeledAnswers.map((answer) => {
             return (
               <li key={answer} className="answer">
-                <button onClick={() => handleSelectAnswer(answer)}>
+                <button
+                  className={answerSelected ? "selected" : ""}
+                  onClick={() => handleSelectAnswer(answer)}
+                >
                   {answer}
                 </button>
               </li>
