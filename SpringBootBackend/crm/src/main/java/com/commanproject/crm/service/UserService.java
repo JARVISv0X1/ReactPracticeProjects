@@ -139,7 +139,7 @@ public class UserService {
 				response.put("emailId",loginUser.getEmailId());
 				response.put("userType",loginUser.getUserType());
 				response.put("userStatus",loginUser.getUserStatus());
-				response.put("responseMessage","validUser");
+				response.put("responseMessage","Login Successfull");
 				String token = JwtUtil.generateToken(loginUser.getEmailId());
 				response.put("token",token);
 			}else {
