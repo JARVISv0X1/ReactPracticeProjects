@@ -1,5 +1,7 @@
 import React from 'react'
 
+const UserList = React.lazy(() => import('./views/manageUser/UserList'))
+const AddUser = React.lazy(() => import('./views/manageUser/addUser'))
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
@@ -50,13 +52,13 @@ const Modals = React.lazy(() => import('./views/notifications/modals/Modals'))
 const Toasts = React.lazy(() => import('./views/notifications/toasts/Toasts'))
 
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
+const Register = React.lazy(() => import('./views/pages/register/Register'))
 
 const routes = [
-  { path: '/', exact: true, name: 'Login' },
-  { path: '/dashboard', name: 'Dashboard', element: Dashboard },
-  { path: '/theme', name: 'Theme', element: Colors, exact: true },
-  { path: '/theme/colors', name: 'Colors', element: Colors },
-  { path: '/theme/typography', name: 'Typography', element: Typography },
+  { path: '/dashboard', exact: true, name: 'Dashboard', element: Dashboard },
+  // { path: '/manageUser', exact: true },
+  { path: '/manageUser/addUser', name: 'Add User', element: AddUser },
+  { path: '/manageUser/userList', name: 'User List', element: UserList },
   { path: '/base', name: 'Base', element: Cards, exact: true },
   { path: '/base/accordion', name: 'Accordion', element: Accordion },
   { path: '/base/breadcrumbs', name: 'Breadcrumbs', element: Breadcrumbs },
