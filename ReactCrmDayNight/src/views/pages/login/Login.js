@@ -1,4 +1,5 @@
 import React from 'react'
+import { Form, Field } from 'react-final-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast, Bounce } from 'react-toastify'
 import {
@@ -20,9 +21,9 @@ import { userLogin } from '../../../service/UserService'
 
 const Login = () => {
   const navigate = useNavigate()
-  async function login() {
-    const loginDetails = { emailId: 'karan.kumar@cashlesso.com', password: 'Qwerty@123' }
-    const response = await userLogin(loginDetails)
+  async function handleLogin(values) {
+    console.log(values)
+    const response = await userLogin(values)
     console.log(response)
     if (response.responseMessage === 'Login Successfull') {
       navigate('/dashboard')
@@ -52,6 +53,7 @@ const Login = () => {
       })
     }
   }
+
   return (
     <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
@@ -60,40 +62,58 @@ const Login = () => {
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
-                  <CForm>
-                    <h1>Login</h1>
-                    <p className="text-body-secondary">Sign In to your account</p>
-                    <CInputGroup className="mb-3">
-                      <CInputGroupText>
-                        <CIcon icon={cilUser} />
-                      </CInputGroupText>
-                      <CFormInput placeholder="Username" autoComplete="username" />
-                    </CInputGroup>
-                    <CInputGroup className="mb-4">
-                      <CInputGroupText>
-                        <CIcon icon={cilLockLocked} />
-                      </CInputGroupText>
-                      <CFormInput
-                        type="password"
-                        placeholder="Password"
-                        autoComplete="current-password"
-                      />
-                    </CInputGroup>
-                    <CRow>
-                      <CCol xs={6}>
-                        <CButton onClick={login} color="primary" className="px-4">
-                          Login
-                        </CButton>
-                      </CCol>
-                      <CCol xs={6} className="text-right">
-                        <Link to="/forgetPassword">
-                          <CButton color="link" className="px-0">
-                            Forgot password?
-                          </CButton>
-                        </Link>
-                      </CCol>
-                    </CRow>
-                  </CForm>
+                  <Form
+                    onSubmit={handleLogin}
+                    render={({ handleSubmit }) => (
+                      <CForm onSubmit={handleSubmit}>
+                        <h1>Login</h1>
+                        <p className="text-body-secondary">Sign In to your account</p>
+                        <CInputGroup className="mb-3">
+                          <CInputGroupText>
+                            <CIcon icon={cilUser} />
+                          </CInputGroupText>
+                          <Field name="emailId">
+                            {({ input }) => (
+                              <CFormInput
+                                {...input}
+                                placeholder="Username"
+                                autoComplete="username"
+                              />
+                            )}
+                          </Field>
+                        </CInputGroup>
+                        <CInputGroup className="mb-4">
+                          <CInputGroupText>
+                            <CIcon icon={cilLockLocked} />
+                          </CInputGroupText>
+                          <Field name="password">
+                            {({ input }) => (
+                              <CFormInput
+                                {...input}
+                                type="password"
+                                placeholder="Password"
+                                autoComplete="current-password"
+                              />
+                            )}
+                          </Field>
+                        </CInputGroup>
+                        <CRow>
+                          <CCol xs={6}>
+                            <CButton type="submit" color="primary" className="px-4">
+                              Login
+                            </CButton>
+                          </CCol>
+                          <CCol xs={6} className="text-right">
+                            <Link to="/forgetPassword">
+                              <CButton color="link" className="px-0">
+                                Forgot password?
+                              </CButton>
+                            </Link>
+                          </CCol>
+                        </CRow>
+                      </CForm>
+                    )}
+                  />
                 </CCardBody>
               </CCard>
               <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
