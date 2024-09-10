@@ -76,8 +76,10 @@ const Login = () => {
                             {({ input }) => (
                               <CFormInput
                                 {...input}
-                                placeholder="Username"
+                                placeholder="Email Id"
                                 autoComplete="username"
+                                type="email"
+                                required
                               />
                             )}
                           </Field>
@@ -93,6 +95,7 @@ const Login = () => {
                                 type="password"
                                 placeholder="Password"
                                 autoComplete="current-password"
+                                required
                               />
                             )}
                           </Field>
