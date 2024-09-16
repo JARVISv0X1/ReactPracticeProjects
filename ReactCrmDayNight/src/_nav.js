@@ -54,12 +54,12 @@ const _nav = [
     items: [
       {
         component: CNavItem,
-        name: 'Add User',
+        name: 'Add Customer',
         to: '/manageUser/addUser',
       },
       {
         component: CNavItem,
-        name: 'User Account',
+        name: 'Customer Account',
         to: '/manageUser/userList',
       },
     ],

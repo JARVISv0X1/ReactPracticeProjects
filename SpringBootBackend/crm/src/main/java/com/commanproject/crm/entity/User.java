@@ -37,7 +37,6 @@ public class User {
 	private String postalCode;
 	private Date createDate;
 	
-	
 		
 	public String getSalt() {
 		return salt;
@@ -148,5 +147,6 @@ public class User {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
+
 	
 }

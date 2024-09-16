@@ -11,24 +11,28 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.commanproject.crm.entity.ForgetOtp;
 import com.commanproject.crm.entity.User;
+import com.commanproject.crm.service.ForgetOtpService;
 import com.commanproject.crm.service.UserService;
+
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/user")
 public class UserController {
+
 	private static Logger logger = LoggerFactory.getLogger(UserService.class.getName());
 
 	@Autowired
 	private UserService userService;
-
+	@Autowired
+	private ForgetOtpService forgetOtpService;
 	
-	@PostMapping("/registerUser")
+	@PostMapping("/customerSignUpByAdmin")
 	public Map<String, Object> addUser(@RequestBody User user) {
-		logger.info("Executing addUser();");
-		return userService.createUser(user);
-		
+		logger.info("Executing addCustomer()");
+		return userService.createCustomer(user);
 	}
 	
 	@PostMapping("/login")
@@ -36,6 +40,28 @@ public class UserController {
 		logger.info("Executing userLogin();");
 
 		return userService.userLogin(loginUser);
+		
+	}
+	@PostMapping("/forgetPasswordOtpGenarator")
+	public Map<String, Object> generateForgetPasswordOtp(@RequestBody ForgetOtp forgetOtpUser) {
+		logger.info("Executing generateForgetPasswordOtp();");
+
+		return forgetOtpService.generateForgetPasswordOtp(forgetOtpUser);
+		
+	}
+	
+	@PostMapping("/forgetPassword")
+	public Map<String,Object>forgetPassword(@RequestBody ForgetOtp forgetOtpUser) {
+		logger.info("Executing generateForgetPasswordOtp();");
+
+		return userService.forgetPassword(forgetOtpUser);
+		
+	}
+	
+	@PostMapping("/getAllCustomerList")
+	public String getAllCustomerList() {
+		logger.info("Executing getAllCustomerList();");
+		return userService.getAllCustomerList();
 		
 	}
 	

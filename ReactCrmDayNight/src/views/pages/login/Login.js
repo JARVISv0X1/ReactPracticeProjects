@@ -21,11 +21,13 @@ import { userLogin } from '../../../service/UserService'
 
 const Login = () => {
   const navigate = useNavigate()
+
   async function handleLogin(values) {
     console.log(values)
     const response = await userLogin(values)
     console.log(response)
     if (response.responseMessage === 'Login Successfull') {
+      localStorage.setItem('auth', JSON.stringify(true))
       navigate('/dashboard')
       toast(response.responseMessage, {
         position: 'top-right',
@@ -39,7 +41,7 @@ const Login = () => {
         transition: Bounce,
       })
     } else {
-      navigate('/login')
+      // navigate('/login')
       toast(response.responseMessage, {
         position: 'top-right',
         autoClose: 5000,

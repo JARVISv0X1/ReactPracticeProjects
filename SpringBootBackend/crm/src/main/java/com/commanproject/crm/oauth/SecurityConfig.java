@@ -13,7 +13,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		System.out.println("inside SecurityConfig class > inside configure()");
         http.csrf().disable().cors().disable()
             .authorizeRequests()
-            .antMatchers("/user/login").permitAll() // Exclude login and token endpoints from authentication
+            .antMatchers("/user/*").permitAll() // Exclude login and token endpoints from authentication
             .anyRequest().authenticated();
     }
 }

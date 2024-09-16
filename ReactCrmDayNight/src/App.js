@@ -7,6 +7,7 @@ import './scss/style.scss'
 import 'react-toastify/dist/ReactToastify.css'
 import ForgetPassword from './views/pages/forgetPassword/ForgetPassword'
 import SetNewPassword from './views/pages/forgetPassword/SetNewPassword'
+import Logout from './views/pages/logout/Logout'
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
@@ -47,6 +48,7 @@ const App = () => {
         <Routes>
           <Route exact path="/" name="Login Page" element={<Login />} />
           <Route exact path="/login" name="Login Page" element={<Login />} />
+          <Route exact path="/logout" name="Logout Page" element={<Logout />} />
           <Route exact path="/register" name="Register Page" element={<Register />} />
           <Route exact path="/*" name="Home" element={<DefaultLayout />} />
           <Route path="/forgetPassword" name="Forget Password" element={<ForgetPassword />}></Route>

@@ -1,5 +1,5 @@
 import React from 'react'
-
+// import { loader as getCustomerListLoader } from './views/manageUser/UserList'
 const UserList = React.lazy(() => import('./views/manageUser/UserList'))
 const AddUser = React.lazy(() => import('./views/manageUser/addUser'))
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
@@ -57,8 +57,19 @@ const Register = React.lazy(() => import('./views/pages/register/Register'))
 const routes = [
   { path: '/dashboard', exact: true, name: 'Dashboard', element: Dashboard },
   // { path: '/manageUser', exact: true },
-  { path: '/manageUser/addUser', name: 'Add User', element: AddUser },
-  { path: '/manageUser/userList', name: 'User List', element: UserList },
+  { path: '/manageUser/addUser', name: 'Add Customer', element: AddUser },
+  {
+    path: '/manageUser/userList',
+    name: 'Customer List',
+    element: UserList,
+    // loader: getCustomerListLoader,
+  },
+  {
+    path: '/manageUser/edit/:{uniqueId}',
+    name: 'Customer Edit',
+    element: UserList,
+    // loader: getCustomerListLoader,
+  },
   { path: '/base', name: 'Base', element: Cards, exact: true },
   { path: '/base/accordion', name: 'Accordion', element: Accordion },
   { path: '/base/breadcrumbs', name: 'Breadcrumbs', element: Breadcrumbs },

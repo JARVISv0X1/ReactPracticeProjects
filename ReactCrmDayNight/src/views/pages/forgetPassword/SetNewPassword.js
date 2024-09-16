@@ -14,7 +14,7 @@ import {
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 
-const Register = () => {
+const SetNewPassword = () => {
   return (
     <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
@@ -23,8 +23,8 @@ const Register = () => {
             <CCard className="mx-4">
               <CCardBody className="p-4">
                 <CForm>
-                  <h1>Register</h1>
-                  <p className="text-body-secondary">Create your account</p>
+                  <h1>SetNewPassword</h1>
+                  <p className="text-body-secondary">Reset your account</p>
                   {/* <CInputGroup className="mb-3">
                     <CInputGroupText>
                       <CIcon icon={cilUser} />
@@ -68,4 +68,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default SetNewPassword

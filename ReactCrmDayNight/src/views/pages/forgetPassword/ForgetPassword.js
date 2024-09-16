@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Form, Field } from 'react-final-form'
+import { Link, useNavigate } from 'react-router-dom'
+import { toast, Bounce } from 'react-toastify'
 import {
   CButton,
   CCard,
@@ -12,15 +14,74 @@ import {
   CInputGroupText,
   CRow,
 } from '@coreui/react'
-import { cilDoubleQuoteSansLeft } from '@coreui/icons'
+
+import { generateForgetPin, forgetPassword } from '../../../service/UserService'
 
 const ForgetPassword = () => {
-  function handeForgetPassword(values) {
-    console.log(values)
+  const [otpSent, setOtpSent] = useState(false) // To control OTP state
+  const [email, setEmail] = useState('') // Store the email to pass to getOtp
+  const navigate = useNavigate()
+  async function handleForgetPassword(values) {
+    console.log('Submitting with values:', values)
+    let response = await forgetPassword(values)
+    if (response.responseMessage === 'Entered OTP is Correct') {
+      navigate('/setNewPassword')
+      toast(response.responseMessage, {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce,
+      })
+    } else {
+      toast(response.responseMessage, {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce,
+      })
+    }
   }
 
-  function getOtp(input) {
-    console.log(`OTP: ${input}`)
+  async function getOtp(email) {
+    console.log(`Sending OTP to: ${email}`)
+    let otpResponse = await generateForgetPin(email)
+    if (otpResponse.responseStatus === '000') {
+      setOtpSent(true)
+      toast(otpResponse.responseMessage, {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce,
+      })
+    } else {
+      toast('Something went wrong', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce,
+      })
+      setOtpSent(true)
+    }
   }
 
   return (
@@ -31,7 +92,7 @@ const ForgetPassword = () => {
             <CCard className="mx-4">
               <CCardBody className="p-4">
                 <Form
-                  onSubmit={handeForgetPassword}
+                  onSubmit={handleForgetPassword}
                   render={({ handleSubmit }) => (
                     <CForm onSubmit={handleSubmit}>
                       <h1>Forget Password</h1>
@@ -45,10 +106,26 @@ const ForgetPassword = () => {
                               placeholder="Enter Email"
                               autoComplete="email"
                               required
+                              disabled={otpSent} // Disable email input once OTP is sent
+                              onChange={(e) => {
+                                input.onChange(e) // Update form state
+                                setEmail(e.target.value) // Store email separately
+                              }}
                             />
                           )}
                         </Field>
                       </CInputGroup>
+                      <div className="d-grid mb-3">
+                        <CButton
+                          color="success"
+                          disabled={otpSent} // Disable "Get OTP" once OTP is sent
+                          onClick={() => getOtp(email)}
+                        >
+                          Get OTP
+                        </CButton>
+                      </div>
+
+                      {/* OTP Field: Initially disabled until OTP is sent */}
                       <CInputGroup className="mb-3">
                         <CInputGroupText>#</CInputGroupText>
                         <Field name="otp">
@@ -58,23 +135,20 @@ const ForgetPassword = () => {
                               placeholder="Enter OTP"
                               autoComplete="otp"
                               required
+                              disabled={!otpSent} // Enable only after OTP is sent
                             />
                           )}
                         </Field>
                       </CInputGroup>
+
                       <div className="d-grid">
-                        <CButton onClick={() => getOtp(handleSubmit)} color="success">
-                          Get OTP
-                        </CButton>
-                      </div>
-                      <div className="d-grid">
-                        <CButton type="submit" color="success">
+                        <CButton type="submit" color="success" disabled={!otpSent}>
                           Submit
                         </CButton>
                       </div>
                     </CForm>
                   )}
-                ></Form>
+                />
               </CCardBody>
             </CCard>
           </CCol>
